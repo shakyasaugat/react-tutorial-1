@@ -19,6 +19,8 @@ const CardMediaExample = ({attribute}) => {
     const classes = useStyles();
 
     const postDetail = attribute;
+    let excerpt = postDetail.excerpt.rendered;
+    excerpt = excerpt.replace("<p>", "").replace("<\/p>", "");
     return (
         <Card className={classes.root}>
             <CardMedia
@@ -31,7 +33,7 @@ const CardMediaExample = ({attribute}) => {
                     {parse(postDetail.title.rendered)}
                 </Typography>
                 <Typography variant="body2" color="textSecondary" component="p">
-                    {parse(postDetail.excerpt.rendered)}
+                    { parse(excerpt) }
                 </Typography>
             </CardContent>
         </Card>

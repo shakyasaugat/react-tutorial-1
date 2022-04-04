@@ -11,7 +11,8 @@ export default class PostList extends Component {
             page: 1
 
         };
-        this.handlePageClick = this.handlePageClick.bind(this);
+        this.getNextPage = this.getNextPage.bind(this);
+        this.getPrevPage = this.getPrevPage.bind(this);
         
     }
     receivedData() {
@@ -22,10 +23,8 @@ export default class PostList extends Component {
         .then((res) => res.json())
         .then((res) => {
             // const post = Object.keys(res).map( (item, index) => <CardMediaExample key={index} attribute={item}/> );
-            const nextPage = this.state.page + 1;
             this.setState({
                 post: res,
-                page: nextPage
             });
         })
     }
@@ -33,12 +32,22 @@ export default class PostList extends Component {
         return (
             <div className="post-list-wrapper">
                 {this.state.post.map( (item, index) => <CardMediaExample key={index} attribute={item}/> )}
-                <button onClick={this.handlePageClick}>Next</button>
+                <button onClick={this.getNextPage}>Next</button>
+                <button onClick={this.getPrevPage}>Prev</button>
             </div>
         )
     }
-    handlePageClick = (e) => {
+    getNextPage = (e) => {
         e.preventDefault();
+        const nextPage = this.state.page + 1;
+        this.setState({page: nextPage})
+        this.receivedData();
+
+    };
+    getPrevPage = (e) => {
+        e.preventDefault();
+        const prevPage = this.state.page - 1;
+        this.setState({page: prevPage})
         this.receivedData();
 
     };
